@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+</head>
+
+<body>
+	<section class="row" layout:fragment="content">
+		<div class="col mt-4">
+			<form action="/admin/orders/saveOrUpdate" method="post" enctype="multipart/form-data" th:object="${order}">
+				<div class="card">
+					<div class="card-header">
+						<h2 th:text="${order.isEdit ? 'Edit Order' : 'Add New Order' }">Add New Order</h2>
+					</div>
+					<div class="card-body">
+						<div class="form-group">
+							<label for="orderId">Order ID</label>
+							<input type="hidden" th:field="*{isEdit}">
+							<input type="text" class="form-control" th:field="*{orderId}" aria-describedby="orderHid"
+								placeholder="Order ID" readonly>
+							<small th:if="${#fields.hasErrors('orderId')}" id="orderHid"
+						class="form-text text-muted">Order is required</small>
+				</div>
+			<div class="form-group">
+					<label for="customerId">Customer ID</label>
+					<input type="text" class="form-control" th:field="*{customerId}" id="customerId"
+						aria-describedby="customerId" placeholder="">
+					<small th:if="${#fields.hasErrors('customerId')}" id="customerId"
+						class="form-text text-muted">Customer ID
+						is required or invalid </small>
+				</div>
+				<div class="form-group">
+					<label for="amount">Amount</label>
+					<input type="text" class="form-control" th:field="*{amount}" id="amount"
+						aria-describedby="amount" placeholder="">
+					<small th:if="${#fields.hasErrors('amount')}" id="amount"
+						class="form-text text-muted">amount 
+						is required or invalid </small>
+				</div>
+						<div class="form-group">
+									<label for="status">Status</label>
+									<select class="form-control" name="status" id="status">
+										<option value="1">Waiting</option>
+										<option value="2">Processed</option>
+									</select>
+								</div>		
+							</div>
+		
+				
+				<div class="card-footer text-muted">
+					<button type="reset" class="btn btn-secondary">Reset</button>
+							<a th:href="@{/admin/orders/search}" class="btn btn-success">List Order</a>
+							<button class="btn btn-primary"><i class="fas fa-save"></i>
+								<span th:if="${order.isEdit}">Update</span>
+								<span th:if="${!order.isEdit}">Save</span>
+							</button>
+				</div>
+				</div>
+			</form>
+		</div>
+	</section>
+</body>
+</html>
